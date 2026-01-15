@@ -5,9 +5,6 @@ const { PrismaClient } = require('@prisma/client');
 const router = express.Router();
 const prisma = new PrismaClient();
 
-// Debug: Log when auth routes are loaded
-console.log('Auth routes initialized');
-
 // Login page
 router.get('/login', (req, res) => {
     if (req.session.userId) {
