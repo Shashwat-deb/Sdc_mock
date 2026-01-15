@@ -150,6 +150,7 @@ body {
 
 .login-button:hover {
   background: #333;
+  transform: translateY(-1px);
 }
 
 .button-arrow {
