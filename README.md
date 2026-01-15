@@ -2,6 +2,12 @@
 
 A login system with role-based access control built with Node.js, PostgreSQL, and Prisma ORM.
 
+## Tech Stack
+- Node.js + Express
+- PostgreSQL + Prisma ORM
+- EJS Templates
+- bcrypt for password hashing
+
 ## Features
 - Login with email/password authentication
 - Role-based access (Supervisor, Manager, HR, Employee)
