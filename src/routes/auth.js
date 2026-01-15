@@ -16,6 +16,7 @@ router.get('/login', (req, res) => {
 // Handle login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
+    const normalizedEmail = email ? email.toLowerCase().trim() : '';
 
     // Validate input
     if (!email || !password) {
