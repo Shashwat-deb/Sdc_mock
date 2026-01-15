@@ -17,6 +17,11 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
+    // Validate input
+    if (!email || !password) {
+        return res.render('login', { error: 'Please enter both email and password' });
+    }
+
     try {
         const user = await prisma.user.findUnique({
             where: { email },
