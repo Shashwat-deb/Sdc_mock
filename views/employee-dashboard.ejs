@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MUJ SDC Employee Dashboard">
+    <title>My Tasks | MUJ SDC</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body class="dashboard-page">
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <h1>MUJ SDC</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-name">
+                        <%= userName %>
+                    </span>
+                    <span class="user-role">
+                        <%= userRole %>
+                    </span>
+                </div>
+                <a href="/logout" class="logout-button">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h2>My Tasks</h2>
+            <p class="subtitle">View your assigned tasks</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon pending-icon">P</div>
+                <div class="stat-info">
+                    <span class="stat-value">
+                        <%= tasks.filter(t=> t.status === 'PENDING').length %>
+                    </span>
+                    <span class="stat-label">Pending</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon progress-icon">IP</div>
+                <div class="stat-info">
+                    <span class="stat-value">
+                        <%= tasks.filter(t=> t.status === 'IN_PROGRESS').length %>
+                    </span>
+                    <span class="stat-label">In Progress</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon completed-icon">C</div>
+                <div class="stat-info">
+                    <span class="stat-value">
+                        <%= tasks.filter(t=> t.status === 'COMPLETED').length %>
+                    </span>
+                    <span class="stat-label">Completed</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon total-icon">T</div>
+                <div class="stat-info">
+                    <span class="stat-value">
+                        <%= tasks.length %>
+                    </span>
+                    <span class="stat-label">Total</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-tasks-section">
+            <% if (tasks.length===0) { %>
+                <div class="no-tasks-message">
+                    <h3>No tasks assigned</h3>
+                    <p>You don't have any tasks at the moment</p>
+                </div>
+                <% } else { %>
+                    <div class="tasks-grid">
+                        <% tasks.forEach(task=> { %>
+                            <div class="task-card task-card-<%= task.status.toLowerCase().replace('_', '-') %>">
+                                <div class="task-card-header">
+                                    <span
+                                        class="status-badge status-<%= task.status.toLowerCase().replace('_', '-') %>">
+                                        <%= task.status.replace('_', ' ' ) %>
+                                    </span>
+                                    <span class="task-date">
+                                        <%= new Date(task.createdAt).toLocaleDateString() %>
+                                    </span>
+                                </div>
+                                <h3>
+                                    <%= task.title %>
+                                </h3>
+                                <% if (task.description) { %>
+                                    <p class="task-description">
+                                        <%= task.description %>
+                                    </p>
+                                    <% } %>
+                            </div>
+                            <% }); %>
+                    </div>
+                    <% } %>
+        </div>
+    </main>
+</body>
+
+</html>

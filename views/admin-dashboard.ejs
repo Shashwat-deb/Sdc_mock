@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MUJ SDC Admin Dashboard">
+    <title>Dashboard | MUJ SDC</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body class="dashboard-page">
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <h1>MUJ SDC</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-name">
+                        <%= userName %>
+                    </span>
+                    <span class="user-role">
+                        <%= userRole %>
+                    </span>
+                </div>
+                <a href="/logout" class="logout-button">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h2>Employee Tasks</h2>
+            <p class="subtitle">Overview of all assigned tasks</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon pending-icon">P</div>
+                <div class="stat-info">
+                    <span class="stat-value">
+                        <%= employees.reduce((sum, emp)=> sum + emp.tasks.filter(t => t.status === 'PENDING').length, 0)
+                            %>
+                    </span>
+                    <span class="stat-label">Pending</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon progress-icon">IP</div>
+                <div class="stat-info">
+                    <span class="stat-value">
+                        <%= employees.reduce((sum, emp)=> sum + emp.tasks.filter(t => t.status ===
+                            'IN_PROGRESS').length, 0) %>
+                    </span>
+                    <span class="stat-label">In Progress</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon completed-icon">C</div>
+                <div class="stat-info">
+                    <span class="stat-value">
+                        <%= employees.reduce((sum, emp)=> sum + emp.tasks.filter(t => t.status === 'COMPLETED').length,
+                            0) %>
+                    </span>
+                    <span class="stat-label">Completed</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon employee-icon">E</div>
+                <div class="stat-info">
+                    <span class="stat-value">
+                        <%= employees.length %>
+                    </span>
+                    <span class="stat-label">Employees</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="employees-section">
+            <% employees.forEach(employee=> { %>
+                <div class="employee-card">
+                    <div class="employee-header">
+                        <div class="employee-avatar">
+                            <%= employee.name.charAt(0) %>
+                        </div>
+                        <div class="employee-info">
+                            <h3>
+                                <%= employee.name %>
+                            </h3>
+                            <p>
+                                <%= employee.email %>
+                            </p>
+                        </div>
+                        <div class="employee-task-count">
+                            <span>
+                                <%= employee.tasks.length %>
+                            </span> tasks
+                        </div>
+                    </div>
+
+                    <div class="tasks-list">
+                        <% if (employee.tasks.length===0) { %>
+                            <div class="no-tasks">No tasks assigned</div>
+                            <% } else { %>
+                                <% employee.tasks.forEach(task=> { %>
+                                    <div class="task-item">
+                                        <div
+                                            class="task-status-indicator status-<%= task.status.toLowerCase().replace('_', '-') %>">
+                                        </div>
+                                        <div class="task-details">
+                                            <h4>
+                                                <%= task.title %>
+                                            </h4>
+                                            <% if (task.description) { %>
+                                                <p>
+                                                    <%= task.description %>
+                                                </p>
+                                                <% } %>
+                                        </div>
+                                        <div class="task-status">
+                                            <span
+                                                class="status-badge status-<%= task.status.toLowerCase().replace('_', '-') %>">
+                                                <%= task.status.replace('_', ' ' ) %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                                        <% } %>
+                    </div>
+                </div>
+                <% }); %>
+
+                    <% if (employees.length===0) { %>
+                        <div class="no-employees">
+                            <p>No employees found</p>
+                        </div>
+                        <% } %>
+        </div>
+    </main>
+</body>
+
+</html>
