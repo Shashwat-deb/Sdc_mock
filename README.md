@@ -32,3 +32,5 @@ Open http://localhost:3000/login
 | Supervisor | supervisor@mujsdc.in | password123 |
 | Employee | shashwat@mujsdc.in | password123 |
 | Employee | shivansh@mujsdc.in | password123 |
+this project was used for interview on SDC team
+
